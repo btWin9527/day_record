@@ -1046,3 +1046,21 @@ export default class BetStorage {
 }
 
 ```
+
+### 25. git对文件大小写修改无反应
+
+```shellScript
+    git config core.ignorecase false
+```
+
+### 26. 同路由不同参数页面不更新
+
+> vue-router 从 /post-page/a 跳转到 /post/-page/b ,页面数据未更新(原因：vue-router智能的发现这是同一个组件，决定复用该组件，在created函数内的方法未执行)
+
+```html
+ <!--解决方法
+ @description  在router-view添加不同的key,即使是公共组件，url变化也会重新创建该组件
+-->
+<router-view :key="$route.fullpath"></router-view>
+```
+
