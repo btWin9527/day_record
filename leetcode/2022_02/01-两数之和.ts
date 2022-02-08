@@ -45,9 +45,11 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
+ * @method twoSum 解法1
  * @param {number[]} nums
  * @param {number} target
  * @return {number[]}
+ * @description 使用哈希表方式实现
  */
 function twoSum(nums: number[], target: number): number[] {
     var map: Map<number,number> = new Map();
@@ -60,4 +62,22 @@ function twoSum(nums: number[], target: number): number[] {
         }
     }
     return []
-};
+}
+
+/**
+ * @method twoSum2 解法2
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ * @description 使用indexOf方式实现
+ */
+function twoSum2(nums: number[], target: number): number[] {
+    for (let i = 0; i < nums.length; i++) {
+        let temp: number = target - nums[i];
+        let tempIdx = nums.indexOf(temp);
+        if(tempIdx !== -1 && tempIdx !== i){
+            return [tempIdx, i]
+        }
+    }
+    return []
+}
