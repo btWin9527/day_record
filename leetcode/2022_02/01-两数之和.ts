@@ -42,7 +42,7 @@
 // 进阶：你可以想出一个时间复杂度小于 O(n²) 的算法吗？
 // Related Topics 数组 哈希表 👍 13350 👎 0
 
-
+// 【标签】数组 哈希表
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
  * @method twoSum 解法1
@@ -69,7 +69,7 @@ function twoSum(nums: number[], target: number): number[] {
  * @param {number[]} nums
  * @param {number} target
  * @return {number[]}
- * @description 使用indexOf方式实现
+ * @description 使用数组indexOf方式实现
  */
 function twoSum2(nums: number[], target: number): number[] {
     for (let i = 0; i < nums.length; i++) {

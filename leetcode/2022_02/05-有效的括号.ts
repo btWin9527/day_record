@@ -53,7 +53,7 @@
 //
 // Related Topics 栈 字符串 👍 2949 👎 0
 
-
+// 【标签】 栈 字符串
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
  * @method isValid 栈操作实现

@@ -46,6 +46,8 @@
 //
 // 进阶：你能不将整数转为字符串来解决这个问题吗？
 // Related Topics 数学 👍 1788 👎 0
+
+// 【标签】数学 字符串
 /**
  * @method isPalindrome 解法1（普通解法）
  * @param {number} x
