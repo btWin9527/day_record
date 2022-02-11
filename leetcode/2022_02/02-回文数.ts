@@ -93,7 +93,7 @@ function isPalindrome2(x: number): boolean {
  * @method isPalindrome3 解法3-了解（巧妙解法）
  * @param {number} x
  * @return {boolean}
- * @description 取出后半段数字进行翻转
+ * @description 取出后半段数字进行翻转 lg(n)
  */
 function isPalindrome3(x: number): boolean {
     if (x < 0 || (x % 10 == 0 && x != 0)) return false;

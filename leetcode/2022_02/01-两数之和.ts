@@ -53,13 +53,13 @@
  */
 function twoSum(nums: number[], target: number): number[] {
     var map: Map<number,number> = new Map();
-    for (let i = 0; i < nums.length; i++) {
+    map.set(nums[0], 0);
+    for (let i = 1; i < nums.length; i++) {
         let temp: number = target - nums[i];
         if (map.has(temp)) {
             return [i, map.get(temp)]
-        } else {
-            map.set(nums[i], i)
         }
+        map.set(nums[i], i)
     }
     return []
 }
