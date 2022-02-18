@@ -69,9 +69,14 @@ function maxArea(height: number[]): number {
 function maxArea2(height: number[]): number {
     let i = 0, j = height.length - 1, res = 0;
     while (i < j) {
-        res = height[i] < height[j] ?
-            Math.max(res, (j - i) * height[i++]) :
-            Math.max(res, (j - i) * height[j--])
+        if (height[i] < height[j]) {
+            // 取res和当前面积的较大值
+            res = Math.max(height[i++] * (j - i), res)
+            i++;
+        } else {
+            res = Math.max(height[j--] * (j - i), res)
+            j--;
+        }
     }
     return res
 }
