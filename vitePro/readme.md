@@ -99,3 +99,43 @@ export { methodA };
   "type": "module"
 }
 ```
+## 2. 环境搭建
+
+> 使用pnpm`基于内容寻址，支持monorepo管理子项目，避免非法访问依赖
+> （未在package.json中声明的依赖，项目中应无法访问，避免出现依赖提升问题）`进行初始化项目
+
+### 2.1 安装pnpm
+
+```shell
+# 下载pnpm
+npm i -g pnpm
+
+# 配置国内镜像源
+pnpm config set registry https://registry.npmmirror.com/
+```
+
+### 2.2 项目初始化
+
+```shell
+# 初始化项目
+pnpm create vite
+
+# 进入项目目录
+cd vite-project
+# 安装依赖
+pnpm install
+# 启动项目
+pnpm run dev
+```
+
+**总结**
+vite的no-bundle:
+利用浏览器原生 ES 模块的支持，实现开发阶段的 Dev Server，进行模块的按需加载，而不是先整体打包再进行加载
+
+### 2.3 生产环境构建
+
+```shell
+#   "build": "tsc && vite build"
+# 虽然 Vite 提供了开箱即用的 TypeScript 以及 JSX 的编译能力，但实际上底层并没有实现 TypeScript 的类型校验系统，因此需要借助 tsc 来完成类型校验(在 Vue 项目中使用 vue-tsc 这个工具来完成)
+pnpm run build
+```
