@@ -3,7 +3,9 @@ import {defineConfig, normalizePath} from 'vite'
 import path from 'path'
 import react from '@vitejs/plugin-react'
 import autoprefixer from 'autoprefixer'
-import windi from "vite-plugin-windicss";
+import windi from "vite-plugin-windicss"
+import viteEslint from 'vite-plugin-eslint'
+import viteStylelint from '@amatlash/vite-plugin-stylelint'
 
 // 全局 scss 文件的路径
 // 用 normalizePath 解决 window 下的路径问题
@@ -13,7 +15,12 @@ export default defineConfig({
     // 手动指定项目根目录位置
     plugins: [
         react(),
-        windi()
+        windi(),
+        viteEslint(),
+        viteStylelint({
+            // 对某些文件排除检查
+            exclude: /windicss|node_modules/
+        }),
     ],
     css: {
         // 预处理器配置

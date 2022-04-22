@@ -292,3 +292,31 @@ npx eslint --init
 pnpm i eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser@latest -D
 
 ```
+
+### 6. 样式规范
+
+> Stylelint，一个强大的现代化样式 Lint 工具，用来帮助你避免语法错误和统一代码风格
+
+```shell
+pnpm i stylelint stylelint-prettier stylelint-config-prettier stylelint-config-recess-order stylelint-config-standard stylelint-config-standard-scss -D
+```
+
+### 7. git提交工作流集成
+
+> 提交前的代码 Lint 检查，检查提交信息
+
+**安装**
+```shell
+# 安装Husky
+pnpm i husky -D
+```
+
+**配置**
+
+```json
+{
+  "husky": {
+    "pre-commit": "npm run lint"
+  }
+}
+```
