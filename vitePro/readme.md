@@ -139,3 +139,156 @@ vite的no-bundle:
 # 虽然 Vite 提供了开箱即用的 TypeScript 以及 JSX 的编译能力，但实际上底层并没有实现 TypeScript 的类型校验系统，因此需要借助 tsc 来完成类型校验(在 Vue 项目中使用 vue-tsc 这个工具来完成)
 pnpm run build
 ```
+
+## 3. 配置css工程化
+
+> vite内置css处理器（包含Scss/Less/Stylus）
+
+### 3.1 安装预处理器
+
+```shell
+pnpm i sass -D
+```
+
+### 3.2 全局配置variable.scss默认变量
+
+```js
+// vite.config.ts
+import { normalizePath } from 'vite';
+// 如果类型报错，需要安装 @types/node: pnpm i @types/node -D
+import path from 'path';
+
+// 全局 scss 文件的路径
+// 用 normalizePath 解决 window 下的路径问题
+const variablePath = normalizePath(path.resolve('./src/variable.scss'));
+
+
+export default defineConfig({
+  // css 相关的配置
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // additionalData 的内容会在每个 scss 文件的开头自动注入
+        additionalData: `@import "${variablePath}";`
+      }
+    }
+  }
+})
+```
+
+### 3.3 CSS Modules
+
+> vite会对后缀带有`.module`的样式文件自动应用CSS Modules。
+
+**module样式配置**
+```scss
+// index.module.scss
+.header {
+  color: $theme-color;
+}
+```
+
+**Header组件**
+```tsx
+// Header文件
+import style from './index.module.scss';
+
+export function Header() {
+    return <p className={style.header}>This is Header</p>
+}
+```
+
+**vite.config.js配置**
+```ts
+// vite.config.ts
+// css modules配置
+modules: {
+    // 一般我们可以通过 generateScopedName 属性来对生成的类名进行自定义
+    // 其中，name 表示当前文件名，local 表示类名
+    generateScopedName: "[name]__[local]___[hash:base64:5]"
+}
+```
+
+### 3.4 PostCss
+
+> vite配置文件已经提供了PostCSS的配置入口，可以直接在vite的配置文件中操作
+
+
+**安装**
+```shell
+# 安装自动添加前缀插件，解决浏览器兼容问题
+pnpm i autoprefixer -D
+```
+
+**配置**
+
+```ts
+// vite.config.ts 增加如下的配置
+import autoprefixer from 'autoprefixer';
+
+export default {
+    css: {
+        // 进行 PostCSS 配置
+        postcss: {
+            plugins: [
+                autoprefixer({
+                    // 指定目标浏览器
+                    overrideBrowserslist: ['Chrome > 40', 'ff > 31', 'ie 11']
+                })
+            ]
+        }
+    }
+}
+```
+
+### 3.5 CSS In JS
+
+> 于 CSS In JS 方案，在构建侧我们需要考虑选择器命名问题、DCE(Dead Code Elimination 即无用代码删除)、代码压缩、
+> 生成 SourceMap、服务端渲染(SSR)等问题，而styled-components和emotion已经提供了对应的 babel 插件来解决这些问题，
+> 我们在 Vite 中要做的就是集成这些 babel 插件
+
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react({
+      babel: {
+        // 加入 babel 插件
+        // 以下插件包都需要提前安装
+        // 当然，通过这个配置你也可以添加其它的 Babel 插件
+        plugins: [
+          // 适配 styled-component
+          "babel-plugin-styled-components",
+          // 适配 emotion
+          "@emotion/babel-plugin",
+        ]
+      },
+      // 注意: 对于 emotion，需要单独加上这个配置
+      // 通过 `@emotion/react` 包编译 emotion 中的特殊 jsx 语法
+      jsxImportSource: "@emotion/react"
+    })
+  ]
+})
+```
+
+## 4. CSS原子化框架
+
+> CSS 原子化框架主要包括Tailwind CSS 和 Windi CSS
+
+### 5. 配置eslint
+
+```shell
+# 安装eslint
+pnpm i eslint -D
+
+# 初始化eslint配置
+npx eslint --init
+
+# 手动安装eslint插件
+pnpm i eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser@latest -D
+
+```
