@@ -425,3 +425,30 @@ let Event = (function () {
 </script>
 
 ```
+
+```js
+// 判断是否为回文数
+function isPalindrome(x) {
+  // 异常情况处理
+  if (x < 0 || (x % 10 == 0 && x != 0)) return false;
+  let revertedNumber = 0;
+  // 数字reverse
+  while (x > revertedNumber) {
+    revertedNumber = revertedNumber * 10 + x % 10;
+    x = Math.floor(x / 10);
+  }
+  // 偶数直接判断是否相当，奇数除去最后一位判断相等
+  return x == revertedNumber || x == Math.floor(revertedNumber / 10);
+}
+
+// 获取下一个回文数
+function bigerReback(num) {
+  while (true) {
+    let temp = ++num;
+    if (isPalindrome(temp)) {
+      return temp
+    }
+  }
+}
+
+```
