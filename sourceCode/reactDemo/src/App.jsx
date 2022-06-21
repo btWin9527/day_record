@@ -1,63 +1,60 @@
+import {useState, useEffect, useCallback} from 'react'
 import './App.css';
-import FilterableProductTable from './components/FilterableProductTable';
-import SortList from './components/SortList';
-import AntdComp from './components/AntdComp';
-import CyFilterableProductTableFun from './components/CyFilterableProductTableFun';
-import CyFilterableProductTableHooks from './components/CyFilterableProductTableHooks';
-import CyFilterableProductTableClass from './components/CyFilterableProductTableClass';
 
-const PRODUCTS = [
-  {
-    category: 'Sporting Goods',
-    price: '$49.99',
-    stocked: true,
-    name: 'Football',
-  },
-  {
-    category: 'Sporting Goods',
-    price: '$9.99',
-    stocked: true,
-    name: 'Baseball',
-  },
-  {
-    category: 'Sporting Goods',
-    price: '$29.99',
-    stocked: false,
-    name: 'Basketball',
-  },
-  {
-    category: 'Electronics',
-    price: '$99.99',
-    stocked: true,
-    name: 'iPod Touch',
-  },
-  {
-    category: 'Electronics',
-    price: '$399.99',
-    stocked: false,
-    name: 'iPhone 5',
-  },
-  { category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7' },
-];
+// 倒计时自定义hooks
+function useDownTime(setTime) {
+
+  return function downTime(time) {
+    if (time > 0) {
+      setTimeout(() => {
+        const tempTime = --time
+        setTime(tempTime)
+        downTime(tempTime)
+      }, 1000)
+    }
+  }
+}
 
 function App() {
+  console.log('render')
+  let [changeState, setChangeState] = useState(0)
+  // 倒计时
+  // let [time, setTime] = useState(10)
+  // const downTime = useDownTime(setTime)
+  // useEffect(() => {
+  //   downTime(time)
+  // }, [])
+
+  const fn = useCallback(function () {
+    setInterval(function () {
+      let i = changeState
+      setChangeState(i++)
+      // 这里打印什么
+      console.log(i, 'i')
+    }, 1000)
+  }, [])
+  // useEffect(() => fn(), [])
+
+  let [time, setTime] = useState(0)
+  const handleClick = () => {
+    setTime(time+1)
+    console.log(time,'1')
+    setTimeout(() => {
+      console.log(time,'2')
+      setTime(prevState => prevState+1)
+      console.log(time,'3')
+
+    },100)
+  }
   return (
-    <div className="App">
-      {/*<FilterableProductTable/>*/}
-      {/* <SortList/> */}
-      {/* <AntdComp/> */}
-      {/* 函数式组件 */}
-      {/* <CyFilterableProductTableFun
-        products={PRODUCTS}
-      ></CyFilterableProductTableFun> */}
-      {/* class组件 */}
-      {/* <CyFilterableProductTableClass products={PRODUCTS}></CyFilterableProductTableClass> */}
-      {/* 优化-自定义hooks */}
-      <CyFilterableProductTableHooks
-        products={PRODUCTS}
-      ></CyFilterableProductTableHooks>
+    <div>
+
+      jjjj
+      <p onClick={handleClick}>{changeState}</p>
+      {/*<p>{time}</p>*/}
     </div>
-  );
+  )
+
 }
 
 export default App;

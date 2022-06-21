@@ -82,7 +82,7 @@ function myPromise(excutor) {
   // 7. 解决异步问题 => 暂存区
   self.onFulfilledCallbacks = []
   self.onRejectedCallbacks = []
-
+![img.png](img.png)
   // 返回成功的结果
   function resolve(value) {
     // 5.1 状态管理
@@ -452,3 +452,37 @@ function bigerReback(num) {
 }
 
 ```
+
+## 4. vue和react
+
+1. vue
+1. 渲染：template
+2. 响应式框架，单向数据流
+3. 更新ui:监听数据变化，数据发生变化，延迟更新ui
+4. vue在ssr中使用虚拟dom
+
+2. react
+1. 渲染：jsx
+2. hooks
+3. 更新ui:dom -> diff -> patch
+
+本地缓存
+
+## 数据如何在react中流动
+
+### 1. 基于props的单向数据流
+
+> 当前组件的state以props的形式流动时，只能流向组件树中比自己层级更低的组件
+
+#### 1.1 父-子组件通信
+
+> props为数据传递
+
+#### 1.2 子-父组件通信
+
+> props为函数，子组件中以形参传出
+
+#### 1.3 兄弟组件
+
+> 将兄弟组件使用同一个父组件，由父子组件操作实现兄弟组件通信
+
