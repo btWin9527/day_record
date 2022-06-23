@@ -11,6 +11,8 @@ class Vue {
     _proxyData(this, this.$data)
     // *3. 创建Observer实例，监视data的属性变化
     new Observer(this.$data)
+    // *4.调用Compiler
+    new Compiler(this)
   }
 
 }

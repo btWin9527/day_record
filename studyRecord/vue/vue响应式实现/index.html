@@ -9,8 +9,14 @@
     <title>Document</title>
 </head>
 <body>
-<div id="app"></div>
+<div id="app">
+    <p v-text="msg2"></p>
+    <p>{{msg1}}</p>
+</div>
+<script src="./js/Dep.js"></script>
+<script src="./js/Watcher.js"></script>
 <script src="./js/Observer.js"></script>
+<script src="./js/Compiler.js"></script>
 <script src="./js/Vue.js"></script>
 <script>
   const vm = new Vue({

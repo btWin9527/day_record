@@ -21,6 +21,9 @@ class Observer {
 
 // 用于为对象定义一个响应式的属性
 function defineReactive(data, key, value) {
+  // 创建消息中心
+  const dep = new Dep()
+
   // 检测是否为对象，如果是，创建一个新的Observer类
   observer(value)
 
@@ -30,6 +33,8 @@ function defineReactive(data, key, value) {
     configurable: true,
     get() {
       console.log('获取属性')
+      // *在触发Getter时添加订阅者
+      Dep.target && dep.addSub(Dep.target)
       return value
     },
     set(newValue) {
@@ -37,6 +42,8 @@ function defineReactive(data, key, value) {
       if (newValue === value) return
       value = newValue
       observer(value)
+      // * 数据变化，通知消息中心
+      dep.notify()
     }
   })
 }
