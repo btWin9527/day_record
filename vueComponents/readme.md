@@ -352,14 +352,51 @@ export default {
   <!-- 
    transition组件提供了6个class，设置过渡的具体效果
    进入的类名：
-   v-enter
+   v-enter 开始
    v-enter-to
-   v-enter-active
+   v-enter-active 进入激活
    
    v-leave
-   v-leave-to
-   v-leave-active
+   v-leave-to 离开
+   v-leave-active 离开激活
    -->
 
 </template>
+
+<style>
+/* 过渡执行状态 */
+.v-enter-active, .v-leave-active {
+  transition: all .5s;
+}
+
+/* 入场初始状态和离场结束状态 */
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+</style>
 ```
+
+**transition组件的相关属性**
+
+```vue
+
+<template>
+  <!-- 
+  name 用于给多个元素、组件设置不同的过渡效果
+  appear 让组件在初始渲染时实现过渡
+   -->
+  <transition name="demo" appear>
+
+  </transition>
+</template>
+<style>
+.demo-enter {
+  
+}
+</style>
+```
+
+**transition-group组件**
+
+> 为列表统一设置,用法和transition组件基本一致,需要设置tag属性，保证html嵌套合理
+
