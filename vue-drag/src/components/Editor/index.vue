@@ -5,6 +5,7 @@
         v-for="(item, index) in componentData"
         :key="item.id"
         :index="index"
+        :style="getShapeStyle(item.style)"
         :default-style="item.style">
       <component
           :is="item.component"
@@ -21,7 +22,7 @@
 <script>
 import Shape from "@/components/Editor/Shape";
 import {mapGetters} from "vuex";
-import {getStyle} from "@/utitls/style";
+import {getStyle, getShapeStyle} from "@/utitls/style";
 
 export default {
   components: {
@@ -36,6 +37,7 @@ export default {
     ...mapGetters('base', ['componentData'])
   },
   methods: {
+    getShapeStyle,
     getComponentStyle(style) {
       return getStyle(style, this.svgFilterAttrs)
     },
@@ -52,5 +54,13 @@ export default {
   position: relative;
   background-color: #fff;
   margin: auto;
+}
+
+.edit {
+  .component {
+    outline: none;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

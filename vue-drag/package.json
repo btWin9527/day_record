@@ -13,7 +13,8 @@
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",
-    "nanoid": "^4.0.0"
+    "nanoid": "^4.0.0",
+    "element-ui": "^2.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

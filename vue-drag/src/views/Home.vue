@@ -115,7 +115,6 @@ export default {
       width: 200px;
       left: 0;
       top: 0;
-      background-color: aquamarine;
     }
 
     .right {
@@ -124,7 +123,6 @@ export default {
       width: 288px;
       right: 0;
       top: 0;
-      background-color: blanchedalmond;
     }
 
     .center {
