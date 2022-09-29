@@ -250,7 +250,7 @@ export default {
 export default {
   path: '/index',
   name: 'index',
-  component: () => import('../views/index.vue'),
+  component: () => import('../views/index.js'),
   // 子路由
   children: []
 }
