@@ -30,3 +30,9 @@ export const swap = (arr, i, j) => {
 export function $(selector) {
   return document.querySelector(selector)
 }
+
+const components = ['VText', 'RectShape', 'CircleShape']
+
+export function isPreventDrop(component) {
+  return !components.includes(component) && !component.startsWith('SVG')
+}

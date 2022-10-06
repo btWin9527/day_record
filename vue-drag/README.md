@@ -1,4 +1,4 @@
-# vue-drage
+# vue-drag
 
 ## 1. 项目基础配置
 
@@ -74,7 +74,50 @@ export default {
    1. 画布上显示的组件数据，存储在vuex管理
    2. 拖拽后的组件位置，通过坐标计算得到，控制行内样式显示在画布上
 
+
+## 5. 实现组件在画布中移动
+
+> 主要是通过`mousedown`, `mouseup`, `mousemove`三个事件，计算坐标位置偏移量，重新设置当前组件的位置样式
+
+1. mousedown 事件，在组件上按下鼠标时，记录组件当前的位置，即 xy 坐标
+2. mousemove 事件，每次鼠标移动时，都用当前最新的 xy 坐标减去最开始的 xy 坐标，从而计算出移动距离，再改变组件位置
+3. mouseup 事件，鼠标抬起时结束移动
+
+```js
+handleMouseDown(e) {
+    e.stopPropagation()
+    this.$store.commit('setCurComponent', { component: this.element, zIndex: this.zIndex })
+
+    const pos = { ...this.defaultStyle }
+    const startY = e.clientY
+    const startX = e.clientX
+    // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
+    const startTop = Number(pos.top)
+    const startLeft = Number(pos.left)
+
+    const move = (moveEvent) => {
+        const currX = moveEvent.clientX
+        const currY = moveEvent.clientY
+        pos.top = currY - startY + startTop
+        pos.left = currX - startX + startLeft
+        // 修改当前组件样式
+        this.$store.commit('setShapeStyle', pos)
+    }
+
+    const up = () => {
+        document.removeEventListener('mousemove', move)
+        document.removeEventListener('mouseup', up)
+    }
+
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', up)
+}
+```
+
+## 6. 删除组件，调整组件层级
+
+
+
 **todo**
 
-1. 组件在画布中移动
 2. https://github.com/woai3c/Front-end-articles/issues/19

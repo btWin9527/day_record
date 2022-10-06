@@ -51,7 +51,8 @@ export default {
     Editor
   },
   computed: {
-    ...mapGetters('compose', ['editor'])
+    ...mapGetters('compose', ['editor']),
+    ...mapGetters('base', ['isClickComponent'])
   },
   methods: {
     /**
@@ -91,10 +92,17 @@ export default {
       e.dataTransfer.dropEffect = 'copy';
     },
     handleMouseDown(e) {
+      // 阻止事件冒泡
+      e.stopPropagation()
       console.log(2)
+      this.$store.commit('base/setClickComponentStatus', false)
     },
     deselectCurComponent(e) {
       console.log(3)
+      // 当点击非组件区域，清除当前组件信息
+      if (!this.isClickComponent) {
+        this.$store.commit('base/setCurComponent', {component: null, index: null})
+      }
     }
   }
 }

@@ -1,9 +1,13 @@
 <template>
-  <div id="editor" class="editor">
+  <div
+      @mousedown="handleMouseDown"
+      id="editor"
+      class="editor">
     <!-- 页面组件列表展示 -->
     <Shape
         v-for="(item, index) in componentData"
         :key="item.id"
+        :element="item"
         :index="index"
         :style="getShapeStyle(item.style)"
         :default-style="item.style">
@@ -41,6 +45,9 @@ export default {
     getComponentStyle(style) {
       return getStyle(style, this.svgFilterAttrs)
     },
+    handleMouseDown(e){
+
+    }
   },
   mounted() {
     // 获取编辑器元素
