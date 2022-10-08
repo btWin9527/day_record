@@ -116,7 +116,7 @@ handleMouseDown(e) {
 
 ## 6. 删除组件，调整组件层级
 
-
+> 由于拖拽组件到画布中是有先后顺序的，所以可以按照数据顺序来分配图层层级。删除组件非常简单，一行代码搞定：componentData.splice(index, 1
 
 **todo**
 

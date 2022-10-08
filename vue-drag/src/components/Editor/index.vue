@@ -1,8 +1,10 @@
 <template>
   <div
-      @mousedown="handleMouseDown"
       id="editor"
-      class="editor">
+      class="editor"
+      @mousedown="handleMouseDown"
+      @contextmenu="handleContextMenu"
+  >
     <!-- 页面组件列表展示 -->
     <Shape
         v-for="(item, index) in componentData"
@@ -20,17 +22,21 @@
           :style="getComponentStyle(item.style)"
       />
     </Shape>
+    <!-- 右击菜单 -->
+    <ContextMenu/>
   </div>
 </template>
 
 <script>
+import ContextMenu from "@/components/Editor/ContextMenu";
 import Shape from "@/components/Editor/Shape";
 import {mapGetters} from "vuex";
 import {getStyle, getShapeStyle} from "@/utitls/style";
 
 export default {
   components: {
-    Shape
+    Shape,
+    ContextMenu
   },
   data() {
     return {
@@ -45,8 +51,27 @@ export default {
     getComponentStyle(style) {
       return getStyle(style, this.svgFilterAttrs)
     },
-    handleMouseDown(e){
+    handleMouseDown(e) {
 
+    },
+    handleContextMenu(e) {
+      e.stopPropagation()
+      e.preventDefault()
+
+      // 计算菜单相对于编辑器的位移
+      let target = e.target
+      let top = e.offsetY
+      let left = e.offsetX
+      while (target instanceof SVGElement) {
+        target = target.parentNode
+      }
+
+      while (!target.className.includes('editor')) {
+        left += target.offsetLeft
+        top += target.offsetTop
+        target = target.parentNode
+      }
+      this.$store.commit('contextmenu/showContextMenu', {left, top})
     }
   },
   mounted() {

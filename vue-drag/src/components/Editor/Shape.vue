@@ -57,6 +57,7 @@ export default {
       // 阻止向父组件冒泡
       e.stopPropagation()
       e.preventDefault()
+      this.$store.commit('contextmenu/hideContextMenu')
     },
     // 手动绑定鼠标移动事件
     bindMouseEvent({startY, startX, startTop, startLeft, pos}) {
