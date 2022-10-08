@@ -66,14 +66,13 @@ export default {
 
 ## 4. 实现组件拖拽到画布显示
 
-1. 实现自定义组件，用于拖拽选择 
-   1. 自定义组件需要全局注册
-   2. 样式需要支持配置默认样式和外部样式传入显示（component-list.js）
+1. 实现自定义组件，用于拖拽选择
+  1. 自定义组件需要全局注册
+  2. 样式需要支持配置默认样式和外部样式传入显示（component-list.js）
 
 2. 实现画布区域，用于放置显示拖拽过来的组件
-   1. 画布上显示的组件数据，存储在vuex管理
-   2. 拖拽后的组件位置，通过坐标计算得到，控制行内样式显示在画布上
-
+  1. 画布上显示的组件数据，存储在vuex管理
+  2. 拖拽后的组件位置，通过坐标计算得到，控制行内样式显示在画布上
 
 ## 5. 实现组件在画布中移动
 
@@ -84,43 +83,86 @@ export default {
 3. mouseup 事件，鼠标抬起时结束移动
 
 ```js
-handleMouseDown(e) {
-    e.stopPropagation()
-    this.$store.commit('setCurComponent', { component: this.element, zIndex: this.zIndex })
+handleMouseDown(e)
+{
+  e.stopPropagation()
+  this.$store.commit('setCurComponent', {component: this.element, zIndex: this.zIndex})
 
-    const pos = { ...this.defaultStyle }
-    const startY = e.clientY
-    const startX = e.clientX
-    // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
-    const startTop = Number(pos.top)
-    const startLeft = Number(pos.left)
+  const pos = {...this.defaultStyle}
+  const startY = e.clientY
+  const startX = e.clientX
+  // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
+  const startTop = Number(pos.top)
+  const startLeft = Number(pos.left)
 
-    const move = (moveEvent) => {
-        const currX = moveEvent.clientX
-        const currY = moveEvent.clientY
-        pos.top = currY - startY + startTop
-        pos.left = currX - startX + startLeft
-        // 修改当前组件样式
-        this.$store.commit('setShapeStyle', pos)
-    }
+  const move = (moveEvent) => {
+    const currX = moveEvent.clientX
+    const currY = moveEvent.clientY
+    pos.top = currY - startY + startTop
+    pos.left = currX - startX + startLeft
+    // 修改当前组件样式
+    this.$store.commit('setShapeStyle', pos)
+  }
 
-    const up = () => {
-        document.removeEventListener('mousemove', move)
-        document.removeEventListener('mouseup', up)
-    }
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+  }
 
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 ```
 
 ## 6. 删除组件，调整组件层级
 
-> 由于拖拽组件到画布中是有先后顺序的，所以可以按照数据顺序来分配图层层级。删除组件非常简单，一行代码搞定：componentData.splice(index, 1
+>
+由于拖拽组件到画布中是有先后顺序的，所以可以按照数据顺序来分配图层层级。删除组件非常简单，一行代码搞定：componentData.splice(
+index, 1
 
 ## 7. 放大缩小
 
 > 在组件周围分布8个小圆点，点击组件时进行放大缩小（类似ps操作）
+
+## 8. 撤销、重做
+
+> 用数组保存编辑器快照数据，再涉及到操作动作时，触发快照存储操作，当需要撤销时，对数组进行-1操作
+
+```js
+const state = {
+  snapshotData: [], // 编辑器快照数据
+  snapshotIndex: -1, // 快照索引
+}
+
+const mutations = {
+  undo(state) {
+    if (state.snapshotIndex >= 0) {
+      state.snapshotIndex--
+      store.commit('setComponentData', deepCopy(state.snapshotData[state.snapshotIndex]))
+    }
+  },
+
+  redo(state) {
+    if (state.snapshotIndex < state.snapshotData.length - 1) {
+      state.snapshotIndex++
+      store.commit('setComponentData', deepCopy(state.snapshotData[state.snapshotIndex]))
+    }
+  },
+
+  setComponentData(state, componentData = []) {
+    Vue.set(state, 'componentData', componentData)
+  },
+
+  recordSnapshot(state) {
+    // 添加新的快照
+    state.snapshotData[++state.snapshotIndex] = deepCopy(state.componentData)
+    // 在 undo 过程中，添加新的快照时，要将它后面的快照清理掉
+    if (state.snapshotIndex < state.snapshotData.length - 1) {
+      state.snapshotData = state.snapshotData.slice(0, state.snapshotIndex + 1)
+    }
+  },
+}
+```
 
 **todo**
 

@@ -1,5 +1,6 @@
 import {swap} from "@/utitls/utils";
 import toast from "@/utitls/toast";
+import Vue from 'vue'
 
 const state = {
   // 画布组件数据
@@ -33,6 +34,9 @@ const getters = {
 }
 
 const mutations = {
+  setComponentData(state, componentData = []) {
+    Vue.set(state, 'componentData', componentData)
+  },
   setCanvasStyle(state, style) {
     state.canvasStyleData = style
   },

@@ -140,6 +140,7 @@ export default {
         this.$store.commit('base/setShapeStyle', pos)
       }
       const up = () => {
+        hasMove && this.$store.dispatch('snapshot/recordSnapshot')
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
       }
@@ -207,7 +208,7 @@ export default {
       const up = () => {
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
-        this.cursors = this.getCursor() // 根据旋转角度获取光标位置
+        needSave && this.$store.dispatch('snapshot/recordSnapshot')
       }
       document.addEventListener('mousemove', move)
       document.addEventListener('mouseup', up)

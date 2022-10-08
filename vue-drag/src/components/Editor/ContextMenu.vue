@@ -27,7 +27,7 @@ export default {
       copyData: null,
       menuList: [
         // {id: 1, text: '复制', click: this.copy},
-        {id: 2, text: '粘贴', click: this.paste},
+        // {id: 2, text: '粘贴', click: this.paste},
         // {id: 3, text: '剪切', click: this.cut},
         {id: 4, text: '删除', click: this.deleteComponent},
         // {id: 5, text: '锁定', click: this.lock},

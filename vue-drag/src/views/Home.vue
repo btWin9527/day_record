@@ -43,6 +43,7 @@ import componentList from '@/custom-component/component-list' // 左侧列表数
 import {deepCopy} from "@/utitls/utils";
 import generateID from "@/utitls/generateID";
 import {mapGetters} from 'vuex'
+import {changeComponentSizeWithScale} from "@/utitls/changeComponentsSizeWithScale";
 
 export default {
   components: {
@@ -77,8 +78,10 @@ export default {
         // 唯一id
         component.id = generateID()
         // todo:根据画面比例修改组件样式比例
+        // changeComponentSizeWithScale(component)
         this.$store.commit('base/addComponent', {component})
-        // todo:添加快照，用于ctrl+z撤回
+        // 添加快照，用于ctrl+z撤回
+        this.$store.dispatch('snapshot/recordSnapshot')
       }
     },
     /**
