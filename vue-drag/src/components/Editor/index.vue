@@ -11,6 +11,7 @@
         :key="item.id"
         :element="item"
         :index="index"
+        :active="item.id === (curComponent || {}).id"
         :style="getShapeStyle(item.style)"
         :default-style="item.style">
       <component
@@ -44,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('base', ['componentData'])
+    ...mapGetters('base', ['componentData', 'curComponent'])
   },
   methods: {
     getShapeStyle,

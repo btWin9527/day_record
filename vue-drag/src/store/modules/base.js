@@ -12,6 +12,17 @@ const state = {
   isClickComponent: false,
   // 编辑器模式 edit preview
   editMode: 'edit',
+  // 是否在编辑器中，用于判断复制、粘贴组件时是否生效，如果在编辑器外，则无视这些操作
+  isInEditor: false,
+  canvasStyleData: { // 页面全局数据
+    width: 1200,
+    height: 740,
+    scale: 100,
+    color: '#000',
+    opacity: 1,
+    background: '#fff',
+    fontSize: 14,
+  },
 }
 
 const getters = {
@@ -22,6 +33,12 @@ const getters = {
 }
 
 const mutations = {
+  setCanvasStyle(state, style) {
+    state.canvasStyleData = style
+  },
+  setInEditorStatus(state, status) {
+    state.isInEditor = status
+  },
   // 拖拽添加组件
   addComponent(state, {component, index}) {
     if (index !== undefined) {

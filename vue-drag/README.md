@@ -118,6 +118,10 @@ handleMouseDown(e) {
 
 > 由于拖拽组件到画布中是有先后顺序的，所以可以按照数据顺序来分配图层层级。删除组件非常简单，一行代码搞定：componentData.splice(index, 1
 
+## 7. 放大缩小
+
+> 在组件周围分布8个小圆点，点击组件时进行放大缩小（类似ps操作）
+
 **todo**
 
 2. https://github.com/woai3c/Front-end-articles/issues/19
