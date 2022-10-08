@@ -6,7 +6,9 @@ const state = {
   // 当前组件实例在画布组件中的索引
   curComponentIndex: null,
   // 若没有点中组件，并在画布空白处弹起鼠标，则取消当前组件的选中状态
-  isClickComponent: false
+  isClickComponent: false,
+  // 编辑器模式 edit preview
+  editMode: 'edit',
 }
 
 const getters = {
@@ -41,7 +43,10 @@ const mutations = {
     if (width) curComponent.style.width = Math.round(width)
     if (height) curComponent.style.height = Math.round(height)
     if (rotate) curComponent.style.rotate = Math.round(rotate)
-  }
+  },
+  setEditMode(state, mode) {
+    state.editMode = mode
+  },
 
 }
 

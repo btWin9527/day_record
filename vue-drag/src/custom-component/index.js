@@ -1,7 +1,9 @@
 import Vue from 'vue'
 
 const component = [
-  'VButton'
+  'VButton',
+  'VText',
+  'RectShape'
 ]
 
 component.forEach((key) => {

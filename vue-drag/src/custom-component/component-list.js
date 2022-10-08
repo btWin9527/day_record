@@ -71,6 +71,28 @@ const list = [
       backgroundColor: '',
     },
   },
+  {
+    component: 'RectShape',
+    label: '矩形',
+    propValue: '&nbsp;',
+    icon: 'juxing',
+    style: {
+      width: 200,
+      height: 200,
+      fontSize: '',
+      fontWeight: 400,
+      lineHeight: '',
+      letterSpacing: 0,
+      textAlign: 'center',
+      color: '',
+      borderColor: '#000',
+      borderWidth: 1,
+      backgroundColor: '',
+      borderStyle: 'solid',
+      borderRadius: '',
+      verticalAlign: 'middle',
+    },
+  },
 ]
 
 for (let i = 0, len = list.length; i < len; i++) {
