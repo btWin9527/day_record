@@ -1,0 +1,19 @@
+{
+  "name": "lg-form-item",
+  "version": "0.0.3",
+  "description": "",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "del": "rimraf dist"
+  },
+  "keywords": [],
+  "author": "教瘦 <54337467@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async-validator": "^3.3.0",
+    "lodash": "3"
+  },
+  "gitHead": "930f550a1a0da8370aa81ab36274b6d5d281dbf8"
+}

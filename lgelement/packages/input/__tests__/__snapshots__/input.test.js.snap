@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lg-input input-snapshot 1`] = `
+<div>
+  <input
+    type="text"
+  />
+</div>
+`;

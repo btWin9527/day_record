@@ -1,0 +1,13 @@
+{
+  "name": "lg-link",
+  "version": "0.0.3",
+  "description": "lg-link component",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "author": "教瘦 <54337467@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": []
+}
