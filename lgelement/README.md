@@ -179,3 +179,11 @@ module.exports = fs.readdirSync(root)
 ```js
 "build": "rollup -c"
 ```
+
+### 基于模版生产组件基本结构
+
+> plop
+
+```shell
+yarn add plop -D -W
+```
