@@ -3,7 +3,7 @@
 exports[`lg-input input-snapshot 1`] = `
 <div>
   <input
-    type="text"
+    type="password"
   />
 </div>
 `;
