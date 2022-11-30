@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+html, body{ width:100%;}
+body{font-family:Microsoft YaHei,SimSun,arial,sans-serif; overflow-x:hidden; overflow-y:scroll;}
+a{text-decoration:none;color:#06c;cursor:pointer;}
+a:hover{text-decoration: none;}
+input,button,select,textarea,label{outline:none;vertical-align:middle;}
+textarea{padding:5px;line-height:16px;resize:none;}
+img,ul,li,p,dl,dt,dd,li,ol,s,textarea{margin:0; border:0 none; padding:0; list-style-type:none;line-height: 1;}
+body,form,input,select,label,button,xmp,h1,h2,h3,h4,h5,h6,label{margin:0;padding:0; }
+em,i{ font-style:normal; list-style-type:none}
+img{ display: block;}
+a{text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+br{height:0;overflow:hidden;}input{border:none;}.clear{clear:both;}
+.clearx:after {visibility: hidden;display: block;font-size: 0;content: " ";clear: both;height: 0;}.clearx {zoom:1;}.left{ float:left}.right{ float:right}
+canvas{width: 100%;height: 100%;}
+
+.box{
+  width: 6.9rem;
+  height: 4.45rem;
+  text-align:center;
+  background: #fff;
+  border-radius:0.1rem;
+  margin: 0.1rem auto 0rem;
+  border:1px solid transparent;
+  box-shadow: 0 0 14px rgba(151,187,233,0.85);
+}
+
+
+
+
+
+
+
+

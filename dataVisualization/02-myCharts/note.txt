@@ -1,0 +1,65 @@
+borderColor: "#6b9bb8",
+lineColor: '#9ec8da',
+pointColor: '#41627c'
+
+hisColor:['#7b8c7c', '#5c968a', '#576d93', '#a0d878', '#337d56', '#c1d0ae', '#93b469', '#bda29a']
+
+
+grd.addColorStop(0, "#e9eae9")
+grd.addColorStop("0.8", "#fefefe")
+grd.addColorStop("1", "#e9eae9")
+
+let linear = ctx.createLinearGradient(220, 220, 380, 200)
+linear.addColorStop(0, '#ffc26b')
+linear.addColorStop(0.5, '#ff9a5f')
+linear.addColorStop(1, '#ff8157')
+
+ctx.fillStyle = '#fff'
+ctx.strokeStyle = '#ff7854'
+
+"data": [{
+    xVal: '周一',
+    yVal: 40
+  }, {
+    xVal: '周二',
+    yVal: 70
+  }, {
+    xVal: '周三',
+    yVal: 30
+  }, {
+    xVal: '周四',
+    yVal: 80
+  }, {
+    xVal: '周五',
+    yVal: 30
+  }, {
+    xVal: '周六',
+    yVal: 20
+  }, {
+    xVal: '周日',
+    yVal: 90
+  }]
+
+
+  "data": [{
+    xVal: 'vue',
+    yVal: 80
+  }, {
+    xVal: 'react',
+    yVal: 70
+  }, {
+    xVal: 'angular',
+    yVal: 40
+  }, {
+    xVal: 'webpack',
+    yVal: 90
+  }, {
+    xVal: 'nodeJs',
+    yVal: 60
+  }, {
+    xVal: 'typescript',
+    yVal: 40
+  }, {
+    xVal: 'ES6+',
+    yVal: 100
+  }]
