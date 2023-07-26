@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标操作缩放</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            /* 隐藏body窗口区域滚动条 */
+        }
+    </style>
+    <!--引入three.js三维引擎-->
+    <script src="../js/three.js"></script>
+    <script src="../js/OrbitControls.js"></script>
+</head>
+
+<body>
+<script>
+    /**
+     * 创建场景对象Scene
+     */
+    var scene = new THREE.Scene();
+    /**
+     * 创建网格模型
+     */
+    var geometry = new THREE.BoxGeometry(100, 100, 100);
+    var material = new THREE.MeshLambertMaterial({color: 0x00ff22});
+    var mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    /**
+     * 光源设置
+     */
+        //点光源
+    var point = new THREE.PointLight(0xffffff);
+    point.position.set(400, 200, 300);
+    scene.add(point);
+    //环境光
+    var ambient = new THREE.AmbientLight(0x444444);
+    scene.add(ambient);
+    /**
+     * 相机设置
+     */
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var k = width / height;
+    var s = 200;
+    //创建相机对象
+    var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+    camera.position.set(200, 300, 200);
+    camera.lookAt(scene.position);
+    /**
+     * 创建渲染器对象
+     */
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(width, height);
+    renderer.setClearColor(0xb9d3ff, 1);
+    document.body.appendChild(renderer.domElement);
+
+    // let T0 = new Date();
+    // 执行渲染操作   指定场景、相机作为参数
+    function render() {
+        // let T1 = new Date();
+        // let t = T1 - T0;
+        // T0 = T1;
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
+        // 注释网格旋转，使用鼠标旋转
+        // mesh.rotateY(0.001 * t);
+    }
+
+    render();
+
+    //
+    let controls = new THREE.OrbitControls(camera, renderer.domElement); // 创建控件对象
+    // 取消controls监听鼠标事件调用渲染，因为requestAnimationFrame()在不停调用渲染
+    // controls.addEventListener('change', render); // 监听鼠标键盘事件
+</script>
+</body>
+</html>

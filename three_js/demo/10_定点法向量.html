@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>顶点位置</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            /* 隐藏body窗口区域滚动条 */
+        }
+    </style>
+    <!--引入three.js三维引擎-->
+    <script src="../js/three.js"></script>
+    <script src="../js/OrbitControls.js"></script>
+</head>
+
+<body>
+<script>
+    /**
+     * 创建场景对象Scene
+     */
+    var scene = new THREE.Scene();
+    /**
+     * 创建网格模型
+     */
+        // 创建一个Buffer类型几何体对象
+    var geometry = new THREE.BufferGeometry();
+    // 类型数组创建顶点数据
+    var vertices = new Float32Array([
+        0, 0, 0, //顶点1坐标
+        50, 0, 0, //顶点2坐标
+        0, 100, 0, //顶点3坐标
+        0, 0, 0, //顶点4坐标
+        0, 0, 100, //顶点5坐标
+        50, 0, 0, //顶点6坐标
+    ])
+    // 创建缓冲对象
+    var attribute = new THREE.BufferAttribute(vertices, 3); // 3个为一组，表示1个顶点的xyz坐标
+    // 设置几何体attributes属性的位置属性
+    geometry.attributes.position = attribute;
+    // 定义顶点
+    var normals = new Float32Array([
+        0, 0, 1, //顶点1法向量
+        0, 0, 1, //顶点2法向量
+        0, 0, 1, //顶点3法向量
+
+        0, 1, 0, //顶点4法向量
+        0, 1, 0, //顶点5法向量
+        0, 1, 0, //顶点6法向量
+    ]);
+    // 设置几何体attributes属性的位置normal属性
+    geometry.attributes.normal = new THREE.BufferAttribute(normals, 3);
+
+    // 点模型Points
+    var material = new THREE.PointsMaterial({
+        // 使用顶点颜色数据渲染模型，不需要再定义color属性
+        color: 0xff0000,
+    });
+    var points = new THREE.Points(geometry, material);
+    scene.add(points); // 点对象添加到场景中
+
+    var mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    // 坐标轴
+    var axisHelper = new THREE.AxisHelper(300);
+    scene.add(axisHelper);
+    /**
+     * 光源设置
+     */
+        //点光源
+    var point = new THREE.PointLight(0xffffff);
+    point.position.set(400, 200, 300);
+    scene.add(point);
+    //环境光
+    var ambient = new THREE.AmbientLight(0x444444);
+    scene.add(ambient);
+    /**
+     * 相机设置
+     */
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var k = width / height;
+    var s = 200;
+    //创建相机对象
+    var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+    camera.position.set(200, 300, 200);
+    camera.lookAt(scene.position);
+    /**
+     * 创建渲染器对象
+     */
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(width, height);
+    renderer.setClearColor(0xb9d3ff, 1);
+    document.body.appendChild(renderer.domElement);
+
+    // 执行渲染操作   指定场景、相机作为参数
+    function render() {
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
+    }
+
+    render();
+    let controls = new THREE.OrbitControls(camera, renderer.domElement); // 创建控件对象
+</script>
+</body>
+</html>

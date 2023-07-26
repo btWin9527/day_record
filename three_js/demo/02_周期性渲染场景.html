@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>周期性渲染</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            /* 隐藏body窗口区域滚动条 */
+        }
+    </style>
+    <!--引入three.js三维引擎-->
+    <script src="../js/three.js"></script>
+</head>
+
+<body>
+<script>
+    /**
+     * 创建场景对象Scene
+     */
+    var scene = new THREE.Scene();
+    /**
+     * 创建网格模型
+     */
+    var geometry = new THREE.BoxGeometry(100, 100, 100);
+    var material = new THREE.MeshLambertMaterial({color: 0x00ff22});
+    var mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    /**
+     * 光源设置
+     */
+        //点光源
+    var point = new THREE.PointLight(0xffffff);
+    point.position.set(400, 200, 300);
+    scene.add(point);
+    //环境光
+    var ambient = new THREE.AmbientLight(0x444444);
+    scene.add(ambient);
+    /**
+     * 相机设置
+     */
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var k = width / height;
+    var s = 200;
+    //创建相机对象
+    var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+    camera.position.set(200, 300, 200);
+    camera.lookAt(scene.position);
+    /**
+     * 创建渲染器对象
+     */
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(width, height);
+    renderer.setClearColor(0xb9d3ff, 1);
+    document.body.appendChild(renderer.domElement);
+
+    let T0 = new Date();
+    // 执行渲染操作   指定场景、相机作为参数
+    function render() {
+        // 3. 均匀旋转
+        // 在实际代码运行中，可能requestAnimationFrame(render)请求的函数并比一定能按照60FPS频率执行
+        // 立方体的角速度是0.001弧度每毫秒（0.0001 rad/ms = 1rad/s = 180度/s）
+        // 两次执行渲染的函数的时间间隔不一定相同，可用0.001*t优化
+        let T1 = new Date(); // 本次时间
+        let t = T1 - T0; // 时间差
+        T0 = T1; // 把本次时间复制给上次时间
+        requestAnimationFrame(render);
+        renderer.render(scene,camera);
+        mesh.rotateY(0.001 * t);
+
+        // 2. 使用requestAnimationFrame优化setInterval刷新频率，默认保持60FPS
+        // renderer.render(scene, camera); // 执行渲染操作
+        // mesh.rotateY(0.01); // 每次绕y轴旋转0.01弧度
+        // 请求再次执行渲染函数render
+        // requestAnimationFrame(render);
+    }
+
+    render();
+    // 1. 间隔20ms周期性调用函数fun, 20ms也就示刷新频率为50FPS,每秒渲染50次
+    // setInterval("render()", 20);
+</script>
+</body>
+</html>
