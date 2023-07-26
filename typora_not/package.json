@@ -1,0 +1,22 @@
+{
+  "name": "typora_note",
+  "version": "1.0.0",
+  "description": "markdown笔记记录",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/btWin9527/typora_not.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/btWin9527/typora_not/issues"
+  },
+  "homepage": "https://github.com/btWin9527/typora_not#readme",
+  "dependencies": {
+    "mddir": "^1.1.1"
+  }
+}
