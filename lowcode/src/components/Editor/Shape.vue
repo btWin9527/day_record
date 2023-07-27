@@ -137,7 +137,7 @@ export default {
       }
 
       const up = () => {
-        // hasMove && this.$store.commit('recordSnapshot')
+        hasMove && this.$store.commit('recordSnapshot')
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
         this.cursors = this.getCursor() // 根据旋转角度获取光标位置
@@ -260,7 +260,7 @@ export default {
       }
 
       const up = () => {
-        // hasMove && this.$store.commit('recordSnapshot')
+        hasMove && this.$store.commit('recordSnapshot')
         // 触发元素停止移动事件，用于隐藏标线
         eventBus.$emit('unmove')
         document.removeEventListener('mousemove', move)
@@ -344,7 +344,7 @@ export default {
       const up = () => {
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
-        // needSave && this.$store.commit('recordSnapshot')
+        needSave && this.$store.commit('recordSnapshot')
       }
 
       document.addEventListener('mousemove', move)

@@ -6,6 +6,7 @@
             height: changeStyleWithScale(canvasStyleData.height) + 'px'
         }"
       @mousedown="handleMouseDown"
+      @contextmenu="handleContextMenu"
       id="editor"
       class="editor">
     <Shape
@@ -28,6 +29,8 @@
           :request="item.request"
       />
     </Shape>
+    <!-- 右击菜单 -->
+    <ContextMenu/>
     <!-- 选中区域 -->
     <Area
         v-show="isShowArea"
@@ -45,11 +48,13 @@ import {changeStyleWithScale} from '@/utils/translate'
 import Shape from './Shape'
 import Area from "@/components/Editor/Area.vue";
 import {isPreventDrop} from "@/utils/utils";
+import ContextMenu from './ContextMenu'
 
 export default {
   components: {
     Shape,
-    Area
+    Area,
+    ContextMenu
   },
   data() {
     return {
@@ -81,6 +86,26 @@ export default {
     changeStyleWithScale,
     getComponentStyle(style) {
       return getStyle(style, this.svgFilterAttrs)
+    },
+    handleContextMenu(e) {
+      e.stopPropagation()
+      e.preventDefault()
+
+      // 计算菜单相对于编辑器的位移
+      let target = e.target
+      let top = e.offsetY
+      let left = e.offsetX
+      while (target instanceof SVGElement) {
+        target = target.parentNode
+      }
+
+      while (!target.className.includes('editor')) {
+        left += target.offsetLeft
+        top += target.offsetTop
+        target = target.parentNode
+      }
+
+      this.$store.commit('showContextMenu', { top, left })
     },
     /**
      * @method handleMouseDown 鼠标按下事件

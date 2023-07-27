@@ -93,7 +93,14 @@ export default {
     handleMouseDown(e) {
       e.stopPropagation()
     },
-    deselectCurComponent() {
+    deselectCurComponent(e) {
+      if (!this.isClickComponent) {
+        this.$store.commit('setCurComponent', { component: null, index: null })
+      }
+      // 0 左击 1 滚轮 2 右击
+      if (e.button != 2) {
+        this.$store.commit('hideContextMenu')
+      }
     }
   }
 }

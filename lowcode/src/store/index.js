@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import compose from './compose'
 import contextmenu from './contextmenu'
+import layer from "@/store/layer";
+import snapshot from './snapshot'
 
 Vue.use(Vuex)
 
@@ -9,6 +11,8 @@ const data = {
   state: {
     ...contextmenu.state,
     ...compose.state,
+    ...layer.state,
+    ...snapshot.state,
     // 画布组件数据
     componentData: [],
     // 页面全局数据
@@ -32,6 +36,8 @@ const data = {
   mutations: {
     ...compose.mutations,
     ...contextmenu.mutations,
+    ...layer.mutations,
+    ...snapshot.mutations,
     /**
      * 添加组件
      * @param state
@@ -61,6 +67,23 @@ const data = {
       if (width) curComponent.style.width = Math.round(width)
       if (height) curComponent.style.height = Math.round(height)
       if (rotate) curComponent.style.rotate = Math.round(rotate)
+    },
+    setComponentData(state, componentData = []) {
+      Vue.set(state, 'componentData', componentData)
+    },
+    deleteComponent(state, index) {
+      if (index === undefined) {
+        index = state.curComponentIndex
+      }
+
+      if (index == state.curComponentIndex) {
+        state.curComponentIndex = null
+        state.curComponent = null
+      }
+
+      if (/\d/.test(index)) {
+        state.componentData.splice(index, 1)
+      }
     },
   }
 }
