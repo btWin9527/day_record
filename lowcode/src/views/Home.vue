@@ -37,6 +37,9 @@ import RealTimeComponentList from '@/components/RealTimeComponentList'
 import Editor from '@/components/Editor/index'
 import {deepCopy} from '@/utils/utils'
 import componentList from '@/custom-component/component-list'
+import generateID from '@/utils/generateID'
+import { mapState } from 'vuex'
+import { changeComponentSizeWithScale } from '@/utils/changeComponentsSizeWithScale'
 
 export default {
   components: {
@@ -45,6 +48,13 @@ export default {
     RealTimeComponentList,
     Editor
   },
+  computed: mapState([
+    'componentData',
+    'curComponent',
+    'isClickComponent',
+    'canvasStyleData',
+    'editor',
+  ]),
   methods: {
     /**
      * @method handleDrop 拖拽元素放置在目标元素上时触发的事件
@@ -56,8 +66,20 @@ export default {
       e.preventDefault()
       // 阻止事件冒泡，防止触发父元素的 drop 事件
       e.stopPropagation()
-      const component = deepCopy(componentList[e.dataTransfer.getData('index')])
-      this.$store.commit('addComponent', {component})
+      const index = e.dataTransfer.getData('index')
+      const rectInfo = this.editor.getBoundingClientRect()
+      if (index) {
+        const component = deepCopy(componentList[index])
+        component.style.top = e.clientY - rectInfo.y
+        component.style.left = e.clientX - rectInfo.x
+        component.id = generateID()
+
+        // 根据画面比例修改组件样式比例 https://github.com/woai3c/visual-drag-demo/issues/91
+        changeComponentSizeWithScale(component)
+
+        this.$store.commit('addComponent', { component })
+        this.$store.commit('recordSnapshot')
+      }
     },
     /**
      * @method handleDragOver 拖拽元素在目标元素上方移动时触发的事件
@@ -67,14 +89,11 @@ export default {
     handleDragOver(e) {
       // 拖动元素在目标元素上方移动时会触发 dragover 事件。如果不阻止默认行为或调用 event.preventDefault()，拖动元素将不会被允许在目标元素上方放置
       e.preventDefault()
-      console.log('dropover')
     },
     handleMouseDown(e) {
       e.stopPropagation()
-      console.log('mouseDown')
     },
     deselectCurComponent() {
-      console.log('mouseup')
     }
   }
 }

@@ -3,13 +3,20 @@
       :style="{
             ...getCanvasStyle(canvasStyleData),
             width: changeStyleWithScale(canvasStyleData.width) + 'px',
-            height: changeStyleWithScale(canvasStyleData.height) + 'px',
+            height: changeStyleWithScale(canvasStyleData.height) + 'px'
         }"
+      @mousedown="handleMouseDown"
       id="editor"
       class="editor">
-    <div
+    <Shape
         v-for="(item, index) in componentData"
         :key="item.id"
+        :default-style="item.style"
+        :style="getShapeStyle(item.style)"
+        :active="item.id === (curComponent || {}).id"
+        :element="item"
+        :index="index"
+        :class="{ lock: item.isLock }"
     >
       <component
           :is="item.component"
@@ -20,7 +27,14 @@
           :style="getComponentStyle(item.style)"
           :request="item.request"
       />
-    </div>
+    </Shape>
+    <!-- 选中区域 -->
+    <Area
+        v-show="isShowArea"
+        :start="start"
+        :width="width"
+        :height="height"
+    />
   </div>
 </template>
 
@@ -28,11 +42,27 @@
 import {mapState} from 'vuex'
 import {getStyle, getComponentRotatedStyle, getShapeStyle, getSVGStyle, getCanvasStyle} from '@/utils/style'
 import {changeStyleWithScale} from '@/utils/translate'
+import Shape from './Shape'
+import Area from "@/components/Editor/Area.vue";
+import {isPreventDrop} from "@/utils/utils";
 
 export default {
+  components: {
+    Shape,
+    Area
+  },
   data() {
     return {
       svgFilterAttrs: ['width', 'height', 'top', 'left', 'rotate'],
+      editorX: 0,
+      editorY: 0,
+      start: { // 选中区域的起点
+        x: 0,
+        y: 0,
+      },
+      width: 0,
+      height: 0,
+      isShowArea: false,
     }
   },
   computed: mapState([
@@ -41,13 +71,84 @@ export default {
     'canvasStyleData',
     'editor',
   ]),
+  mounted() {
+    // 获取编辑器元素
+    this.$store.commit('getEditor')
+  },
   methods: {
     getCanvasStyle,
+    getShapeStyle,
     changeStyleWithScale,
     getComponentStyle(style) {
       return getStyle(style, this.svgFilterAttrs)
     },
+    /**
+     * @method handleMouseDown 鼠标按下事件
+     * @desc 处理组件在画布移动
+     * @param e
+     */
+    handleMouseDown(e) {
+      // 如果没有选中组件 在画布上点击时需要调用 e.preventDefault() 防止触发 drop 事件
+      if (!this.curComponent || (isPreventDrop(this.curComponent.component))) {
+        e.preventDefault()
+      }
 
+      this.hideArea()
+
+      // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
+      const rectInfo = this.editor.getBoundingClientRect()
+      this.editorX = rectInfo.x
+      this.editorY = rectInfo.y
+
+      const startY = e.clientY
+      const startX = e.clientX
+      this.start.x = startX - this.editorX
+      this.start.y = startY - this.editorY
+      // 展示选中区域
+      this.isShowArea = true
+
+      const move = (moveEvent) => {
+        this.width = Math.abs(moveEvent.clientX - startX)
+        this.height = Math.abs(moveEvent.clientY - startY)
+        if (moveEvent.clientX < startX) {
+          this.start.x = moveEvent.clientX - this.editorX
+        }
+
+        if (moveEvent.clientY < startY) {
+          this.start.y = moveEvent.clientY - this.editorY
+        }
+      }
+
+      const up = (e) => {
+        document.removeEventListener('mousemove', move)
+        document.removeEventListener('mouseup', up)
+
+        if (e.clientX == startX && e.clientY == startY) {
+          this.hideArea()
+          return
+        }
+
+        // this.createGroup()
+      }
+
+      document.addEventListener('mousemove', move)
+      document.addEventListener('mouseup', up)
+    },
+    hideArea() {
+      this.isShowArea = 0
+      this.width = 0
+      this.height = 0
+
+      this.$store.commit('setAreaData', {
+        style: {
+          left: 0,
+          top: 0,
+          width: 0,
+          height: 0,
+        },
+        components: [],
+      })
+    },
   }
 }
 </script>

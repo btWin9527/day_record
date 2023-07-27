@@ -8,6 +8,7 @@ specifiers:
   core-js: ^3.6.5
   element-ui: ^2.15.13
   mathjs: ^10.5.3
+  nanoid: ^4.0.0
   sass: ^1.35.1
   sass-loader: ^12.0.0
   vue: ^2.7.14
@@ -19,6 +20,7 @@ dependencies:
   core-js: registry.npmmirror.com/core-js/3.31.1
   element-ui: registry.npmmirror.com/element-ui/2.15.13_vue@2.7.14
   mathjs: registry.npmmirror.com/mathjs/10.6.4
+  nanoid: registry.npmmirror.com/nanoid/4.0.2
   vue: registry.npmmirror.com/vue/2.7.14
   vue-router: registry.npmmirror.com/vue-router/3.6.5_vue@2.7.14
   vuex: registry.npmmirror.com/vuex/3.6.2_vue@2.7.14
@@ -5663,6 +5665,14 @@ packages:
     version: 3.3.6
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  registry.npmmirror.com/nanoid/4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/nanoid/-/nanoid-4.0.2.tgz}
+    name: nanoid
+    version: 4.0.2
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   registry.npmmirror.com/negotiator/0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/negotiator/-/negotiator-0.6.3.tgz}
