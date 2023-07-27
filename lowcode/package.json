@@ -11,7 +11,8 @@
     "vue": "^2.7.14",
     "element-ui": "^2.15.13",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "mathjs": "^10.5.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

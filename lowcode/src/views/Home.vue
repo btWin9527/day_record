@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div class="home">
     <!-- 工具栏 -->
     <Toolbar/>
-
     <main>
       <!-- 左侧组件列表 -->
       <section class="left">
@@ -13,7 +12,15 @@
       </section>
       <!-- 中间画布 -->
       <section class="center">
-        <Editor />
+        <div
+            class="content"
+            @drop="handleDrop"
+            @dragover="handleDragOver"
+            @mousedown="handleMouseDown"
+            @mouseup="deselectCurComponent"
+        >
+          <Editor/>
+        </div>
       </section>
       <!-- 右侧属性列表 -->
       <section class="right">
@@ -28,6 +35,8 @@ import Toolbar from '@/components/Toolbar'
 import ComponentList from '@/components/ComponentList'
 import RealTimeComponentList from '@/components/RealTimeComponentList'
 import Editor from '@/components/Editor/index'
+import {deepCopy} from '@/utils/utils'
+import componentList from '@/custom-component/component-list'
 
 export default {
   components: {
@@ -35,6 +44,38 @@ export default {
     ComponentList,
     RealTimeComponentList,
     Editor
+  },
+  methods: {
+    /**
+     * @method handleDrop 拖拽元素放置在目标元素上时触发的事件
+     * @desc drop 事件在拖拽元素放置在目标元素上时触发
+     * @param e
+     */
+    handleDrop(e) {
+      // 默认情况下，无法将数据/元素放置到其他元素中。如果需要设置允许放置，必须阻止对元素的默认处理方式
+      e.preventDefault()
+      // 阻止事件冒泡，防止触发父元素的 drop 事件
+      e.stopPropagation()
+      const component = deepCopy(componentList[e.dataTransfer.getData('index')])
+      this.$store.commit('addComponent', {component})
+    },
+    /**
+     * @method handleDragOver 拖拽元素在目标元素上方移动时触发的事件
+     * @desc dragover 事件是在拖拽元素在目标元素上方移动时触发的事件。它通常用于指定拖放操作中的放置目标
+     * @param e
+     */
+    handleDragOver(e) {
+      // 拖动元素在目标元素上方移动时会触发 dragover 事件。如果不阻止默认行为或调用 event.preventDefault()，拖动元素将不会被允许在目标元素上方放置
+      e.preventDefault()
+      console.log('dropover')
+    },
+    handleMouseDown(e) {
+      e.stopPropagation()
+      console.log('mouseDown')
+    },
+    deselectCurComponent() {
+      console.log('mouseup')
+    }
   }
 }
 </script>
