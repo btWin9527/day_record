@@ -26,14 +26,16 @@ class World {
     const controls = createControls(this.#camera, this.#renderer.domElement)
 
     const cube = createCube()
-    const light = createLights()
+    // const light = createLights()
+    const {ambientLight, mainLight} = createLights()
 
     this.#loop.updatables.push(controls)
 
     // stop the cube's animation
     // this.#loop.updatables.push(cube)
 
-    this.#scene.add(cube, light)
+    // this.#scene.add(cube, light)
+    this.#scene.add(cube, ambientLight, mainLight)
 
     const resizer = new Resizer(container, this.#camera, this.#renderer)
     // resizer.onResize = () => {
