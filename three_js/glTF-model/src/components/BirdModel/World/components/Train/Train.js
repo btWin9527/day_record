@@ -1,6 +1,5 @@
+import {Group, MathUtils} from 'three'
 import {createMeshes} from "./meshes.js";
-
-const {Group, MathUtils} = THREE
 
 const wheelSpeed = MathUtils.degToRad(24)
 
