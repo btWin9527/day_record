@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div id="scene-container">123</div>
+		<div id="scene-container"></div>
 	</div>
 </template>
 
@@ -13,11 +13,16 @@ onMounted(() => {
 	init()
 })
 
-const init = () => {
+const init = async () => {
 	// Get a reference to the container element
 	const container = document.querySelector('#scene-container')
 	// 1. Create an instance of the World app
 	const world = new World(container)
+
+	// complete async tasks
+	await world.init().catch((err) => {
+		console.error(err)
+	})
 
 	// start the animation loop
 	world.start()
