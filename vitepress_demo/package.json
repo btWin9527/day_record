@@ -1,0 +1,20 @@
+{
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:docs": "vitepress dev docs",
+    "build:docs": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pinia": "^2.0.23",
+    "vue": "^3.2.41"
+  },
+  "type": "module",
+  "devDependencies": {
+    "vitepress": "1.0.0"
+  }
+}

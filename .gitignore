@@ -1,2 +1,11 @@
-/*idea/
-node_modules/
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+/dist*
+*-lock.*
+pnpm-debug
+stats.html
+.idea
+cache

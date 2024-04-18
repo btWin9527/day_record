@@ -1,0 +1,21 @@
+{
+  "name": "ui-library-docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:docs": "vuepress dev docs --temp .temp",
+    "docs:build": "vuepress build docs",
+    "deploy": "bash deploy.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vuepress": "^1.9.7"
+  },
+  "dependencies": {
+    "vue": "^2.6.10",
+    "vuex": "^3.0.1"
+  }
+}
